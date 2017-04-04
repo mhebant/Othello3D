@@ -1,0 +1,81 @@
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Othello</title>
+
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+	
+	<script id="vertexShader" type="x-shader/x-vertex">
+		attribute vec3 vertexAttribute;
+		attribute vec4 colorAttribute;
+
+		uniform mat4 worldUniform;
+		uniform mat4 perspectiveUniform;
+
+		varying vec4 colorVarying;
+
+		void main(void) {
+			gl_Position = perspectiveUniform * worldUniform * vec4(vertexAttribute, 1.0);
+			colorVarying = colorAttribute;
+		}
+	</script>
+	<script id="fragShader" type="x-shader/x-fragment">
+		precision mediump float;
+
+		varying vec4 colorVarying;
+
+		void main(void) {
+			gl_FragColor = colorVarying;
+		}
+	</script>
+	<script type="text/javascript" src="js/glMatrix-0.9.5.js"></script>
+	<script type="text/javascript" src="js/Graphic3.js"></script>
+	<script type="text/javascript" src="js/othello3D.js"></script>
+	<script type="text/javascript" src="js/othello.js"></script>
+	<script type="text/javascript" src="js/ui.js"></script>
+</head>
+
+<body onload="load();" onresize="resize();">
+	<div id="fpsdisplay" style="display: none;">FPS: <span id="fps"></span><br>FPS Réel: <span id="realfps"></span></div>
+	
+	<div id="popbox">
+	</div>
+	<div id="opac"></div>
+	
+	<div class="menu" id="mainmenu" style="left: 0px;">
+		<img src="logo.png" alt="Othello">
+		<h3 class="solomenu">Solo</h3>
+		<h3 class="multimenu">Multiplayer</h3>
+		<span style="position: absolute; right: 10px; font-size: 0.7em;">by Martin HEBANT</span>
+	</div>
+	<div class="menu" id="solomenu" style="left: -350px;">
+		<h3 id="b_soloplayer" onclick="soloplayerClick();">Player: Black</h3>
+		<h3 id="b_soloia" onclick="soloiaClick();">IA Level: Easy</h3>
+		<h3 id="b_solohelp" onclick="solohelpClick();">Help: No</h3>
+		<h3 id="b_solostart" onclick="solostartClick();">Start !</h3>
+		<h3 class="mainmenu">Back</h3>
+	</div>
+	<div class="menu" id="multimenu" style="left: -350px;">
+		<h3 class="localmenu">Local</h3>
+		<h3 id="b_online">Online <span style="color: #f00; font-size: 0.5em">Not yet</span></h3>
+		<h3 class="mainmenu">Back</h3>
+	</div>
+	<div class="menu" id="localmenu" style="left: -350px;">
+		<h3 id="b_localblack" onclick="localblackClick();">Black Help: No</h3>
+		<h3 id="b_localwhite" onclick="localwhiteClick();">White Help: No</h3>
+		<h3 id="b_localstart" onclick="localstartClick();">Start !</h3>
+		<h3 class="multimenu">Back</h3>
+	</div>
+	
+	<div class="pausemenu" id="buttonmenu" style="left: -350px;">
+	</div>
+	<div class="menu" id="pausemenu" style="left: -350px;">
+		<h3 class="buttonmenu">Resume</h3>
+		<h3 id="b_mainmenu" onclick="mainmenuClick();">Main Menu</h3>
+	</div>
+	
+	
+	
+	<canvas id="canvas"></canvas>
+</body>
+</html>
